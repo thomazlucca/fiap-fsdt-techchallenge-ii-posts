@@ -10,7 +10,8 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000"
+        url: "http://localhost:3000",
+        url: "https://fiap-fsdt-techchallenge-ii-posts.onrender.com"
       }
     ]
   },
