@@ -10,6 +10,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await Post.deleteMany();
+  await mongoose.connection.close();
 });
 
 describe("Posts API", () => {
