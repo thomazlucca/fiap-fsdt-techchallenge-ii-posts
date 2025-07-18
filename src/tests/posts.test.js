@@ -2,6 +2,7 @@ import request from "supertest";
 import app from "../app.js";
 import { connectDB } from "../config/db.js";
 import { Post } from "../models/post.js";
+import mongoose from "mongoose";
 
 beforeAll(async () => {
   process.env.MONGO_URI = "mongodb://localhost:27017/test_blog";
