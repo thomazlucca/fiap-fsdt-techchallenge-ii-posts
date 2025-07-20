@@ -44,7 +44,7 @@ Acesse:
 http://localhost:3000/posts
 
 
-🧪 Rodando os testes
+## 🧪 Rodando os testes
 
 npm install
 npm test
@@ -57,7 +57,7 @@ Edição
 Remoção
 Busca por termo
 
-🗂️ Estrutura do projeto
+## 🗂️ Estrutura do projeto
 
 src/
 ├── api/
@@ -82,7 +82,7 @@ Dockerfile
 .github/workflows/ci.yml
 
 
-📦 Deploy e CI/CD
+## 📦 Deploy e CI/CD
 O projeto conta com workflow automatizado via GitHub Actions:
 
 Instala dependências
@@ -91,7 +91,7 @@ Sobe MongoDB em container
 Roda testes automatizados
 Gera cobertura de código
 
-📝 Documentação da API
+## 📝 Documentação da API
 Exemplo de POST:
 
 POST /posts
