@@ -109,3 +109,5 @@ Desenvolvido por:
 Thomaz
 Mateus
 João
+Gustavo
+Guilherme
