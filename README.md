@@ -106,8 +106,8 @@ Content-Type: application/json
 
 👥 Equipe
 Desenvolvido por:
-Thomaz
-Mateus
-João
-Gustavo
-Guilherme
+Thomaz Moreira
+Mateus Jesus
+João Casemiro
+Gustavo Marques
+Guilherme Belmonte
