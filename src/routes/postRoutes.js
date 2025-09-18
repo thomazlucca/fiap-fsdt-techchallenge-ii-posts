@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as controller from "../controllers/postController.js";
+import { verifyToken } from "../middlewares/auth.js";
 
 const router = Router();
 
@@ -54,7 +55,9 @@ router.get("/:id", controller.getById);
  * @swagger
  * /posts:
  *   post:
- *     summary: Cria um novo post
+ *     summary: Cria um novo post (autenticado)
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -71,14 +74,18 @@ router.get("/:id", controller.getById);
  *     responses:
  *       201:
  *         description: Post criado com sucesso
+ *       401:
+ *         description: Não autorizado
  */
-router.post("/", controller.create);
+router.post("/", verifyToken, controller.create);
 
 /**
  * @swagger
  * /posts/{id}:
  *   put:
- *     summary: Atualiza um post
+ *     summary: Atualiza um post (autenticado)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -101,14 +108,20 @@ router.post("/", controller.create);
  *     responses:
  *       200:
  *         description: Post atualizado
+ *       401:
+ *         description: Não autorizado
+ *       404:
+ *         description: Post não encontrado
  */
-router.put("/:id", controller.update);
+router.put("/:id", verifyToken, controller.update);
 
 /**
  * @swagger
  * /posts/{id}:
  *   delete:
- *     summary: Deleta um post
+ *     summary: Deleta um post (autenticado)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -118,7 +131,11 @@ router.put("/:id", controller.update);
  *     responses:
  *       204:
  *         description: Post deletado
+ *       401:
+ *         description: Não autorizado
+ *       404:
+ *         description: Post não encontrado
  */
-router.delete("/:id", controller.remove);
+router.delete("/:id", verifyToken, controller.remove);
 
 export default router;
