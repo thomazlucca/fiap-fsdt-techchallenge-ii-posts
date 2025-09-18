@@ -4,9 +4,20 @@ import { connectDB } from "../config/db.js";
 import { Post } from "../models/post.js";
 import mongoose from "mongoose";
 
+let token; // 🔑 Token JWT para os testes
+let postId;
+
 beforeAll(async () => {
   process.env.MONGO_URI = "mongodb://localhost:27017/test_blog";
   await connectDB();
+
+  // Login para obter token
+  const res = await request(app).post("/login").send({
+    username: "admin",
+    password: "admin123",
+  });
+
+  token = res.body.token;
 });
 
 afterAll(async () => {
@@ -15,14 +26,15 @@ afterAll(async () => {
 });
 
 describe("Posts API", () => {
-  let postId;
-
   it("deve criar um novo post", async () => {
-    const res = await request(app).post("/posts").send({
-      titulo: "Post de Teste",
-      conteudo: "Conteúdo de teste",
-      autor: "Tester"
-    });
+    const res = await request(app)
+      .post("/posts")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        titulo: "Post de Teste",
+        conteudo: "Conteúdo de teste",
+        autor: "Tester",
+      });
 
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty("_id");
@@ -42,11 +54,14 @@ describe("Posts API", () => {
   });
 
   it("deve atualizar um post", async () => {
-    const res = await request(app).put(`/posts/${postId}`).send({
-      titulo: "Post Atualizado",
-      conteudo: "Novo conteúdo",
-      autor: "Tester"
-    });
+    const res = await request(app)
+      .put(`/posts/${postId}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        titulo: "Post Atualizado",
+        conteudo: "Novo conteúdo",
+        autor: "Tester",
+      });
 
     expect(res.statusCode).toEqual(200);
     expect(res.body.titulo).toBe("Post Atualizado");
@@ -59,7 +74,10 @@ describe("Posts API", () => {
   });
 
   it("deve deletar um post", async () => {
-    const res = await request(app).delete(`/posts/${postId}`);
+    const res = await request(app)
+      .delete(`/posts/${postId}`)
+      .set("Authorization", `Bearer ${token}`);
+
     expect(res.statusCode).toEqual(204);
   });
 });
