@@ -8,7 +8,7 @@ const options = {
       version: "1.0.0",
       description: "API de posts com autenticação JWT",
     },
-    servers: [{ url: "https://fiap-fsdt-techchallenge-ii-posts.onrender.com" }],
+    servers: [{ url: "http://localhost:3000" }],
     components: {
       securitySchemes: {
         bearerAuth: {

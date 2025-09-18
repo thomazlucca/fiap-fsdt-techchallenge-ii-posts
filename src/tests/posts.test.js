@@ -2,26 +2,45 @@ import request from "supertest";
 import app from "../app.js";
 import { connectDB } from "../config/db.js";
 import { Post } from "../models/post.js";
+import { User } from "../models/user.js";
 import mongoose from "mongoose";
 
-let token; // 🔑 Token JWT para os testes
+let token; // 🔑 Token JWT
 let postId;
 
 beforeAll(async () => {
   process.env.MONGO_URI = "mongodb://localhost:27017/test_blog";
+  process.env.JWT_SECRET = "12345";
   await connectDB();
 
-  // Login para obter token
-  const res = await request(app).post("/login").send({
+  // Limpa coleções antes dos testes
+  await Post.deleteMany();
+  await User.deleteMany();
+
+  // 🔹 Cria o usuário admin
+  await request(app).post("/auth/register").send({
     username: "admin",
     password: "admin123",
   });
 
+  // 🔹 Faz login com admin para obter o token
+  const res = await request(app).post("/auth/login").send({
+    username: "admin",
+    password: "admin123",
+  });
+
+  console.log("RESPOSTA LOGIN:", res.statusCode, res.body);
+
   token = res.body.token;
+
+  if (!token) {
+    throw new Error("ERRO: Nenhum token foi retornado no login!");
+  }
 });
 
 afterAll(async () => {
   await Post.deleteMany();
+  await User.deleteMany();
   await mongoose.connection.close();
 });
 
