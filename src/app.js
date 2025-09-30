@@ -1,5 +1,5 @@
 import express from "express";
-import cors from "cord";
+import cors from "cors";
 import postRoutes from "./routes/postRoutes.js";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.js";
